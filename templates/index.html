@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-IDS Dashboard</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f4; }
+        h1 { color: #333; }
+        #alertsTable { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        #alertsTable th, #alertsTable td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        #alertsTable th { background-color: #505050; color: white; }
+        .alert-row-flood { background-color: #ffdddd; } /* Estilo para SYN Flood */
+        .alert-row-scan { background-color: #fffacd; }  /* Estilo para Port Scan */
+    </style>
+</head>
+<body>
+    <h1>Mini-IDS Real-Time Alerts</h1>
+    <table id="alertsTable">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Type</th>
+                <th>Source IP</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            </tbody>
+    </table>
+
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        // Conexión al servidor de SocketIO
+        var socket = io();
+
+        socket.on('connect', function() {
+            console.log('Connected to Mini-IDS server.');
+        });
+
+        // Escuchar el evento 'new_alert' que envía el script de Python
+        socket.on('new_alert', function(data) {
+            console.log('New alert received:', data);
+            
+            var tableBody = document.getElementById('alertsTable').getElementsByTagName('tbody')[0];
+            var newRow = tableBody.insertRow(0); // Insertar al principio para ver las últimas alertas
+            
+            // Asignar una clase basada en el tipo de alerta para colorear la fila
+            if (data.type.includes('Flood')) {
+                newRow.className = 'alert-row-flood';
+            } else if (data.type.includes('Scan')) {
+                newRow.className = 'alert-row-scan';
+            }
+
+            // Añadir las celdas con los datos
+            newRow.insertCell(0).innerHTML = data.time;
+            newRow.insertCell(1).innerHTML = data.type;
+            newRow.insertCell(2).innerHTML = data.source_ip;
+            newRow.insertCell(3).innerHTML = data.details;
+        });
+    </script>
+</body>
+</html>
