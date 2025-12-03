@@ -48,3 +48,32 @@ pip install scapy flask flask-socketio eventlet
 ### 3. Ajustar la interfaz
 
 Antes de ejecutar, debes editar la línea `INTERFACE = "eth0"` en el archivo **`mini_ids.py`** y reemplazar `"eth0"` por el nombre de tu interfaz de red real (ej: `wlan0`, `enp3s0`, etc.).
+
+---
+
+## 🚀 Ejemplos de uso y demo
+
+Sigue estos pasos para poner el IDS en funcionamiento y simular un ataque que lo active:
+
+### 1. Ejecutar el IDS
+
+Abre una terminal, navega a la carpeta del proyecto y ejecuta el script con `sudo`:
+
+```bash
+sudo python3 mini_ids.py
+```
+
+El IDS se iniciará y te indicará la dirección de su *dashboard*: `Web Dashboard available at: http://[LOCAL_IP]:5000`.
+
+### 2. Acceder al dashboard
+
+Abre un navegador web y ve a la dirección indicada (ej: `http://192.168.1.10:5000`).
+
+### 3. Simular un Port Scan (utilizando Nmap)
+
+Abre una terminal **diferente** y ejecuta un escaneo rápido contra la IP de tu IDS (o cualquier otra IP de la red que esté siendo monitorizada), **cambiando `TARGET_IP` por una IP real** (Ej: `192.168.1.5`):
+```bash
+# ATENCIÓN: Ejecutar solo en entornos controlados y con permiso.
+sudo nmap -sS -p 1-100 TARGET_IP
+```
+Al superar el umbral de 15 puertos únicos contactados en 10 segundos, el IDS generará una alerta de "Port Scan" en tiempo real.
