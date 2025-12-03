@@ -30,24 +30,48 @@ El Mini-IDS está configurado para detectar dos patrones de ataque comunes basad
 
 ---
 
-## 📋 Requisitos e instalación
+## 🛠️ Instalación y Uso
 
-### 1. Requisitos del sistema
+Sigue estos pasos para configurar y ejecutar **Mini-IDS** en tu sistema.
 
-* Python 3.x
-* **Permisos de root:** requiere permisos de *root* (`sudo`) para que Scapy pueda capturar paquetes de red.
+### Requisitos
 
-### 2. Instalar dependencias de Python
+Asegúrate de tener instalado `python3` y de contar con permisos de `sudo` para ejecutar el script principal, ya que la captura de paquetes con Scapy lo requiere.
 
-Utiliza `pip` para instalar todas las librerías necesarias:
+### Pasos de ejecución
 
-```bash
-pip install scapy flask flask-socketio eventlet
-```
+1.  **Crear el entorno virtual:**
+    ```bash
+    python3 -m venv ids_env
+    ```
 
-### 3. Ajustar la interfaz
+2.  **Activar el entorno:**
+    ```bash
+    source ids_env/bin/activate
+    ```
 
-Antes de ejecutar, debes editar la línea `INTERFACE = "eth0"` en el archivo **`mini_ids.py`** y reemplazar `"eth0"` por el nombre de tu interfaz de red real (ej: `wlan0`, `enp3s0`, etc.).
+3.  **Instalar dependencias necesarias:**
+    ```bash
+    pip install scapy flask flask-socketio eventlet
+    ```
+
+5.  **Ajustar la interfaz:**
+    antes de ejecutar, debes editar la línea `INTERFACE = "eth0"` en el archivo **`mini_ids.py`** y reemplazar `"eth0"` por el nombre de tu interfaz de red real (ej: `wlan0`, `enp3s0`, etc.).
+
+
+6.  **Ejecutar el sistema de detección de intrusiones (IDS):**
+    ⚠️ **Importante:** Se requiere el uso de `sudo` para iniciar la captura de paquetes de red.
+    ```bash
+    sudo python3 mini_ids.py
+    ```
+    Una vez ejecutado, el servidor web estará disponible para que puedas monitorear el tráfico.
+
+
+7.  **Desactivar el entorno virtual:**
+    cuando termines de usar el proyecto, puedes salir del entorno virtual.
+    ```bash
+    deactivate
+    ```
 
 ---
 
