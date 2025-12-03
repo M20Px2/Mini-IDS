@@ -8,11 +8,11 @@ Sistema de Detección de Intrusiones (IDS) mínimo y en tiempo real, desarrollad
 
 El Mini-IDS se compone de varios módulos que trabajan de forma concurrente:
 
-* **Captura de paquetes:** Utiliza la librería **Scapy** para realizar *sniffing* al tráfico de red en la interfaz especificada (`eth0` por defecto).
-* **Procesamiento asíncrono:** La captura de Scapy se ejecuta en un hilo separado utilizando **Eventlet**, lo que permite que el servidor web de Flask y el motor de detección de amenazas se ejecuten sin bloquearse.
-* **Detección basada en umbrales:** Implementa una técnica de **ventana deslizante** para medir la tasa de tráfico y la actividad de puertos en periodos cortos.
-* **Sistema anti-spam:** Incorpora una ventana de tiempo (`SPAM_WINDOW`) para evitar que se sature el *dashboard* con la misma alerta repetidamente.
-* **Generación de alertas:** Las alertas generadas se envían simultáneamente a tres destinos:
+* **Captura de paquetes:** utiliza la librería **Scapy** para realizar *sniffing* al tráfico de red en la interfaz especificada (`eth0` por defecto).
+* **Procesamiento asíncrono:** la captura de Scapy se ejecuta en un hilo separado utilizando **Eventlet**, lo que permite que el servidor web de Flask y el motor de detección de amenazas se ejecuten sin bloquearse.
+* **Detección basada en umbrales:** implementa una técnica de **ventana deslizante** para medir la tasa de tráfico y la actividad de puertos en periodos cortos.
+* **Sistema anti-spam:** incorpora una ventana de tiempo (`SPAM_WINDOW`) para evitar que se sature el *dashboard* con la misma alerta repetidamente.
+* **Generación de alertas:** las alertas generadas se envían simultáneamente a tres destinos:
     1.  La consola (terminal).
     2.  Un fichero de *log* local (`alerts.log`).
     3.  Un *dashboard* web en tiempo real mediante **SocketIO**.
@@ -32,10 +32,10 @@ El Mini-IDS está configurado para detectar dos patrones de ataque comunes basad
 
 ## 📋 Requisitos e instalación
 
-### 1. Requisitos del Sistema
+### 1. Requisitos del sistema
 
 * Python 3.x
-* **Permisos de root:** Requiere permisos de *root* (`sudo`) para que Scapy pueda capturar paquetes de red.
+* **Permisos de root:** requiere permisos de *root* (`sudo`) para que Scapy pueda capturar paquetes de red.
 
 ### 2. Instalar dependencias de Python
 
@@ -43,3 +43,8 @@ Utiliza `pip` para instalar todas las librerías necesarias:
 
 ```bash
 pip install scapy flask flask-socketio eventlet
+```
+
+### 3. Ajustar la interfaz
+
+Antes de ejecutar, debes editar la línea `INTERFACE = "eth0"` en el archivo **`mini_ids.py`** y reemplazar `"eth0"` por el nombre de tu interfaz de red real (ej: `wlan0`, `enp3s0`, etc.).
